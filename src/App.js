@@ -1,23 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [notes, setNotes] = useState(['a', 'b', 'c', 'd', 'e']);
+  const [editNum, setEditNum] = useState(null);
+
+  const result = notes.map((note, index) => {
+    return (
+      <li key={index} onClick={() => setEditNum(index)}>
+        {note}
+      </li>
+    );
+  });
+
+  function changeItem(event) {
+    setNotes([
+      ...notes.slice(0, editNum),
+      event.target.value,
+      ...notes.slice(editNum + 1),
+    ]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ul>{result}</ul>
+      <input
+        value={editNum !== null ? notes[editNum] : ''}
+        onChange={changeItem}
+        onBlur={() => setEditNum(null)}
+      />
     </div>
   );
 }
