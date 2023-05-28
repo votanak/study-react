@@ -5,7 +5,7 @@ function App() {
   const [value, setValue] = useState('');
 
   const changeHandler = (event) => {
-    console.log('change');
+    console.log(value);
     setValue(event.target.value);
   }
 
