@@ -1,11 +1,10 @@
-import './App.css';
 import { useState } from 'react';
 import { Input } from './Input';
 
 function App() {
   const [value, setValue] = useState('');
 
-  function changeHandler(event) {
+  const changeHandler = (event) => {
     console.log('change');
     setValue(event.target.value);
   }
