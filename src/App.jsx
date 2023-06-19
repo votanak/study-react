@@ -1,24 +1,20 @@
-import { useState } from 'react';
-import { Input } from './Input';
+import { useState } from "react";
+import { createContext } from "react";
+import { Container } from "./Container";
+
+export const myContext = createContext();
 
 function App() {
-  const [value, setValue] = useState('');
+	const [value, setValue] = useState("");
 
-  const changeHandler = (event) => {
-    console.log(value);
-    setValue(event.target.value);
-  }
-
-  function blurHandler(event) {
-  }
-
-  return (
-    <div>
-      <Input name='email' value={value} onChange = {changeHandler}/>
-      <p>
-      </p>
-    </div>
-  );
+	return (
+		<div>
+			<myContext.Provider value={{ value, setValue }}>
+				<Container />
+				<p></p>
+			</myContext.Provider>
+		</div>
+	);
 }
 
 export default App;
