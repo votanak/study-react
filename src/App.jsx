@@ -1,20 +1,32 @@
 import { useState } from "react";
-import { createContext } from "react";
-import { Container } from "./Container";
 
-export const myContext = createContext();
+export function App() {
+	const [notes, setNotes] = useState(["a", "b", "c", "d", "e"]);
+	const [changeIndex, setChangeIndex] = useState();
 
-function App() {
-	const [value, setValue] = useState("");
+	function changeHandler(index) {
+		setNotes([
+			...notes.slice(0, index),
+			notes[index],
+			...notes.slice(index + 1),
+		]);
+	}
+
+	const result = notes.map((note, index) => {
+		return (
+			<div key={index}>
+				<li>
+					{note}
+					<button onClick={() => setChangeIndex(changeIndex)}>Change</button>
+				</li>
+			</div>
+		);
+	});
 
 	return (
 		<div>
-			<myContext.Provider value={{ value, setValue }}>
-				<Container />
-				<p></p>
-			</myContext.Provider>
+			<ul>{result}</ul>
+			<input onChange={() => changeHandler(changeIndex)}></input>
 		</div>
 	);
 }
-
-export default App;
