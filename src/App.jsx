@@ -1,77 +1,54 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-// export function App() {
-// 	const [notes, setNotes] = useState(["a", "b", "c", "d", "e"]);
-
-// 	function changeHandler(event) {
-// 		setNotes([...notes.slice(0, 1), event.target.value, ...notes.slice(1 + 1)]);
-// 	}
-
-// 	const result = notes.map((note, index) => {
-// 		<li>
-// 			{notes[1]} &nbsp; &nbsp;
-// 			<button>Change</button>
-// 		</li>;
-// 	});
-
-// 	return (
-// 		<div>
-// 			<ul>{result}</ul>
-// 			<input id="input" onChange={changeHandler} value={notes[1]}></input>
-// 		</div>
-// 	);
-// }
+const newElem = {
+	id: "GMNCZnFT4rbBP6cirA0Ha",
+	prop1: "value41",
+	prop2: "value42",
+	prop3: "value43",
+};
 
 export function App() {
-	const [notes, setNotes] = useState(["a", "b", "c", "d", "e"]);
-	const [changeIndex, setChangeIndex] = useState();
-	const [value, setValue] = useState();
-	console.log(changeIndex, typeof changeIndex === "number");
+	const [notes, setNotes] = useState([
+		{
+			id: "GYi9G_uC4gBF1e2SixDvu",
+			prop1: "value11",
+			prop2: "value12",
+			prop3: "value13",
+		},
+		{
+			id: "IWSpfBPSV3SXgRF87uO74",
+			prop1: "value21",
+			prop2: "value22",
+			prop3: "value23",
+		},
+		{
+			id: "JAmjRlfQT8rLTm5tG2m1L",
+			prop1: "value31",
+			prop2: "value32",
+			prop3: "value33",
+		},
+	]);
 
-	function changeHandler(event) {
-		if (typeof changeIndex === "number") {
-			setNotes([
-				...notes.slice(0, changeIndex),
-				event.target.value,
-				...notes.slice(changeIndex + 1),
-			]);
-		} else {
-			setValue(event.target.value);
-		}
-	}
-
-	const clickHandler = (event, index) => {
-		event.preventDefault();
-		document.getElementById("input").focus();
-		setChangeIndex(index);
+	const AddNewElem = () => {
+		const veryNewElem = { ...newElem, ["id"]: uuidv4() };
+		setNotes([...notes, veryNewElem]);
 	};
 
-	const result = notes.map((note, index) => {
+	const result = notes.map((note) => {
 		return (
-			<li key={index} onClick={(event) => clickHandler(event, index)}>
-				{note} &nbsp; &nbsp;
-			</li>
+			<p key={note.id}>
+				<p>{note.id}</p>
+				<span>{note.prop1}</span>,<span>{note.prop2}</span>,
+				<span>{note.prop3}</span>
+			</p>
 		);
 	});
 
-	const blurHandle = () => {
-		if (typeof changeIndex === "number") {
-			setChangeIndex(undefined);
-		} else {
-			setNotes([...notes, value]);
-		}
-		setValue("");
-	};
-
 	return (
 		<div>
-			<ul>{result}</ul>
-			<input
-				id="input"
-				onChange={changeHandler}
-				onBlur={blurHandle}
-				value={typeof changeIndex === "number" ? notes[changeIndex] : value}
-			></input>
+			{result}
+			<button onClick={AddNewElem}>Add newElem</button>
 		</div>
 	);
 }
