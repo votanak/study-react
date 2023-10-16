@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
-const newElem = {
+const changeId = "JAmjRlfQT8rLTm5tG2m1L";
+
+const newedElem = {
 	id: "GMNCZnFT4rbBP6cirA0Ha",
 	prop1: "value41",
 	prop2: "value42",
@@ -30,25 +31,31 @@ export function App() {
 		},
 	]);
 
-	const AddNewElem = () => {
-		const veryNewElem = { ...newElem, ["id"]: uuidv4() };
-		setNotes([...notes, veryNewElem]);
+	const changeElem = () => {
+		const copy = [];
+		notes.map((note) => {
+			if (note.id === changeId) {
+				note = { ...newedElem };
+			}
+			copy.push(note);
+		});
+		setNotes(copy);
 	};
 
 	const result = notes.map((note) => {
 		return (
-			<p key={note.id}>
+			<h4 key={note.id}>
 				<p>{note.id}</p>
-				<span>{note.prop1}</span>,<span>{note.prop2}</span>,
+				<span>{note.prop1}</span>, &nbsp; <span>{note.prop2}</span>, &nbsp;
 				<span>{note.prop3}</span>
-			</p>
+			</h4>
 		);
 	});
 
 	return (
 		<div>
 			{result}
-			<button onClick={AddNewElem}>Add newElem</button>
+			<button onClick={changeElem}>Change Elem</button>
 		</div>
 	);
 }
