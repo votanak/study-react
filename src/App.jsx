@@ -1,20 +1,26 @@
 import { useState } from "react";
-import { createContext } from "react";
-import { Container } from "./Container";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Modal, Button, ModalTitle } from "react-bootstrap";
 
-export const myContext = createContext();
+const PopUp = (show, handleClose) => {
+	<Modal show={show} onHide={handleClose}>
+		<Modal.Header closeButton>
+			<ModalTitle>Это мой попап</ModalTitle>
+		</Modal.Header>
+	</Modal>;
+};
 
-function App() {
-	const [value, setValue] = useState("");
+export const App = () => {
+	const [show, setShow] = useState(false);
+
+	const handleShow = () => setShow(true);
+	const handleClose = () => setShow(false);
 
 	return (
 		<div>
-			<myContext.Provider value={{ value, setValue }}>
-				<Container />
-				<p></p>
-			</myContext.Provider>
+			<p>нечто</p>
+			<Button onClick={handleShow}>показать Modal</Button>
+			<PopUp show={show} handleClose={handleClose} />
 		</div>
 	);
-}
-
-export default App;
+};
