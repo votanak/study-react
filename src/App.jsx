@@ -2,7 +2,7 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, ModalTitle } from "react-bootstrap";
 
-const PopUp = (show, setShow) => {
+const PopUp = ({show, setShow}) => {
 	return (
 		<Modal show={show} onHide={() => setShow(false)}>
 			<Modal.Header closeButton>
