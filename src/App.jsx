@@ -3,11 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button, ModalTitle } from "react-bootstrap";
 
 const PopUp = (show, setShow) => {
-	const [show, setShow] = useState(show);
 	return (
 		<Modal show={show} onHide={() => setShow(false)}>
 			<Modal.Header closeButton>
-				<ModalTitle>Это мой попап</ModalTitle>
+				<ModalTitle>This is my PopUp</ModalTitle>
 			</Modal.Header>
 		</Modal>
 	);
@@ -18,9 +17,9 @@ export const App = () => {
 
 	return (
 		<div>
-			<p>нечто</p>
-			<Button onClick={() => setShow(true)}>показать Modal</Button>
-			<PopUp show={show} handleClose={setShow} />
+			<p>Press a button to show Modal</p>
+			<Button onClick={() => setShow(true)}>Open Modal</Button>
+			<PopUp show={show} setShow={setShow}></PopUp>
 		</div>
 	);
 };
