@@ -1,25 +1,24 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal, Button, ModalTitle } from "react-bootstrap";
+import { Table, Row, Col } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 
-const PopUp = ({ show, setShow }) => {
-	return (
-		<Modal show={show} onHide={() => setShow(false)}>
-			<Modal.Header closeButton>
-				<ModalTitle>This is my PopUp</ModalTitle>
-			</Modal.Header>
-		</Modal>
-	);
-};
+const initProds = [
+	{ id: uuidv4(), name: "prod1", catg: "catg1", cost: 100 },
+	{ id: uuidv4(), name: "prod2", catg: "catg2", cost: 200 },
+	{ id: uuidv4(), name: "prod3", catg: "catg3", cost: 300 },
+];
 
 export const App = () => {
-	const [show, setShow] = useState(false);
-
 	return (
-		<div>
-			<p>Press a button to show Modal</p>
-			<Button onClick={() => setShow(true)}>Open Modal</Button>
-			<PopUp show={show} setShow={setShow}></PopUp>
-		</div>
+		<Table>
+			{initProds.map((el) => (
+				<Row key={el.id}>
+					<Col>{el.name}</Col>
+					<Col>{el.catg}</Col>
+					<Col>{el.cost}</Col>
+				</Row>
+			))}
+		</Table>
 	);
 };
