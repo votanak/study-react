@@ -1,6 +1,5 @@
-import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Row, Col } from "react-bootstrap";
+import { Table, Row, Col, Button } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 
 const initProds = [
@@ -10,13 +9,18 @@ const initProds = [
 ];
 
 export const App = () => {
+
+	const deleteHandler = ()=> {
+		const copy = [...initProds].
+	}
+
 	return (
 		<Table>
 			{initProds.map((el) => (
 				<Row key={el.id}>
 					<Col>{el.name}</Col>
 					<Col>{el.catg}</Col>
-					<Col>{el.cost}</Col>
+					<Col>{el.cost}</Col><span><Button onClick={deleteHandler}>Delete Me</Button></span>
 				</Row>
 			))}
 		</Table>
