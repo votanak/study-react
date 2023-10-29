@@ -13,7 +13,7 @@ const Styles = styled.div`
   }
 
   input {
-    margin: 5px;
+    margin: 10px;
     width: 30%;
   }
 `;
