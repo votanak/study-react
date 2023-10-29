@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
@@ -9,7 +9,9 @@ const Styles = styled.div`
     height: 100px;
     padding: 5px;
     align-items: center;
+    justify-content: left;
   }
+
   input {
     margin: 5px;
     width: 30%;
@@ -27,19 +29,24 @@ export const App = () => {
   const [obj, setObj] = useState({ id: "", name: "", catg: "", cost: "" });
   const [editId, setEditId] = useState();
 
+  const editHandler = (edId) => {
+    setEditId(edId);
+    setObj(prods.find((el) => el.id === edId));
+  };
+
   const result = prods.map((el) => (
     <Row key={el.id}>
       <Col>{el.name}</Col>&nbsp;
       <Col>{el.catg}</Col>&nbsp;
       <Col>{el.cost}</Col>&nbsp;
       <Col>
-        <Button onClick={() => setEditId(el.id)}>Edit element</Button>
+        <Button onClick={() => editHandler(el.id)}>Edit element</Button>
       </Col>
     </Row>
   ));
 
   const getValue = (prop) =>
-    Boolean(editId) ? prods.find((el) => el.id === editId)[prop] : "";
+    Boolean(editId) ? prods.find((el) => el.id === editId)[prop] : obj[prop];
 
   const changeHandler = (event, prop) => {
     if (Boolean(editId)) {
@@ -49,23 +56,23 @@ export const App = () => {
         )
       );
     } else {
-      setProds([...prods, { id: uuidv4(), name: "", catg: "", cost: "" }]);
-      setEditId(prods.length - 1);
       setObj({ ...obj, [prop]: event.target.value });
     }
   };
 
   const saveItem = () => {
     if (Boolean(editId)) {
-      setEditId("");
+      setEditId();
+      setObj({ id: "", name: "", catg: "", cost: "" });
     } else {
+      setProds([...prods, { ...obj, id: uuidv4() }]);
       setObj({ id: "", name: "", catg: "", cost: "" });
     }
   };
 
   return (
     <Styles>
-      <Table>{result}</Table>
+      <Container fluid>{result}</Container>
       <Form.Control
         value={getValue("name")}
         onChange={(e) => changeHandler(e, "name")}
