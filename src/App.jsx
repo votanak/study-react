@@ -1,77 +1,84 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Row, Col, Button, Form, FormControl } from "react-bootstrap";
+import { Table, Row, Col, Button, Form } from "react-bootstrap";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import styled from "styled-components";
 
-const initNotes = [
-  {
-    id: "GYi9G_uC4gBF1e2SixDvu",
-    prop1: "value11",
-    prop2: "value12",
-    prop3: "value13",
-  },
-  {
-    id: "IWSpfBPSV3SXgRF87uO74",
-    prop1: "value21",
-    prop2: "value22",
-    prop3: "value23",
-  },
-  {
-    id: "JAmjRlfQT8rLTm5tG2m1L",
-    prop1: "value31",
-    prop2: "value32",
-    prop3: "value33",
-  },
+const Styles = styled.div`
+  .row {
+    height: 100px;
+    padding: 5px;
+    align-items: center;
+  }
+  input {
+    margin: 5px;
+    width: 30%;
+  }
+`;
+
+const initProds = [
+  { id: uuidv4(), name: "prod1", catg: "catg1", cost: 100 },
+  { id: uuidv4(), name: "prod2", catg: "catg2", cost: 200 },
+  { id: uuidv4(), name: "prod3", catg: "catg3", cost: 300 },
 ];
 
 export const App = () => {
-  const [notes, setNotes] = useState(initNotes);
-  const [inpValue1, setInpValue1] = useState("");
-  const [inpValue2, setInpValue2] = useState("");
-  const [inpValue3, setInpValue3] = useState("");
+  const [prods, setProds] = useState(initProds);
+  const [obj, setObj] = useState({ id: "", name: "", catg: "", cost: "" });
+  const [editId, setEditId] = useState();
 
-  const result = notes.map((el) => (
-    <p key={el.id}>
-      <span>{el.prop1}</span>&nbsp;
-      <span>{el.prop2}</span>&nbsp;
-      <span>{el.prop3}</span>
-    </p>
+  const result = prods.map((el) => (
+    <Row key={el.id}>
+      <Col>{el.name}</Col>&nbsp;
+      <Col>{el.catg}</Col>&nbsp;
+      <Col>{el.cost}</Col>&nbsp;
+      <Col>
+        <Button onClick={() => setEditId(el.id)}>Edit element</Button>
+      </Col>
+    </Row>
   ));
 
-  const addItem = () => {
-    setNotes([
-      ...notes,
-      {
-        id: uuidv4(),
-        prop1: inpValue1,
-        prop2: inpValue2,
-        prop3: inpValue3,
-      },
-    ]);
-    setInpValue1("");
-    setInpValue2("");
-    setInpValue3("");
+  const getValue = (prop) =>
+    Boolean(editId) ? prods.find((el) => el.id === editId)[prop] : "";
+
+  const changeHandler = (event, prop) => {
+    if (Boolean(editId)) {
+      setProds(
+        prods.map((prod) =>
+          prod.id === editId ? { ...prod, [prop]: event.target.value } : prod
+        )
+      );
+    } else {
+      setProds([...prods, { id: uuidv4(), name: "", catg: "", cost: "" }]);
+      setEditId(prods.length - 1);
+      setObj({ ...obj, [prop]: event.target.value });
+    }
+  };
+
+  const saveItem = () => {
+    if (Boolean(editId)) {
+      setEditId("");
+    } else {
+      setObj({ id: "", name: "", catg: "", cost: "" });
+    }
   };
 
   return (
-    <div>
-      {result}
+    <Styles>
+      <Table>{result}</Table>
       <Form.Control
-        onChange={(e) => setInpValue1(e.target.value)}
-        value={inpValue1}
+        value={getValue("name")}
+        onChange={(e) => changeHandler(e, "name")}
       />
-      <br />
       <Form.Control
-        onChange={(e) => setInpValue2(e.target.value)}
-        value={inpValue2}
+        value={getValue("catg")}
+        onChange={(e) => changeHandler(e, "catg")}
       />
-      <br />
       <Form.Control
-        onChange={(e) => setInpValue3(e.target.value)}
-        value={inpValue3}
+        value={getValue("cost")}
+        onChange={(e) => changeHandler(e, "cost")}
       />
-      <br />
-      <Button onClick={addItem}>Save</Button>
-    </div>
+      <Button onClick={saveItem}>Fixing</Button>
+    </Styles>
   );
 };
