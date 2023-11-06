@@ -7,7 +7,7 @@ import { NaviBar } from "./components/Navibar";
 import { Home } from "./Home";
 import { Users } from "./Users";
 import { About } from "./About";
-import { Routes, Route, Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 const Styles = styled.div``;
 
@@ -16,9 +16,9 @@ export const App = () => {
     <>
       <NaviBar />
       <Routes>
-        <Route exact path="/" element={Home} />
-        <Route path="/users" element={Users} />
-        <Route path="/about" element={About} />
+        <Route path="/" element={<Home />} />
+        <Route path="users" element={<Users />} />
+        <Route path="about" element={<About />} />
       </Routes>
     </>
   );
